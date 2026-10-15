@@ -27,10 +27,10 @@ RUN git clone --depth 1 --branch "${OPENCLAW_GIT_REF}" https://github.com/opencl
 
 # NOTE: the old 'relax workspace:* to *' patch was removed: on OpenClaw >= 2026.10 it made pnpm
 # install an older published openclaw from npm into extensions, breaking the build.
-RUN pnpm install --no-frozen-lockfile
-RUN pnpm build
 ENV OPENCLAW_PREFER_PNPM=1
-RUN pnpm ui:install && pnpm ui:build
+# Single layer: ui:build renames dist/control-ui in place, which fails with EXDEV
+# when dist was created in an earlier image layer (overlayfs).
+RUN pnpm install --no-frozen-lockfile && pnpm build && pnpm ui:install && pnpm ui:build
 
 
 # Runtime image
