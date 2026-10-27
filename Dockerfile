@@ -22,7 +22,7 @@ WORKDIR /openclaw
 
 # Pin to a known-good ref (tag/branch). Override in Railway template settings if needed.
 # Using a released tag avoids build breakage when `main` temporarily references unpublished packages.
-ARG OPENCLAW_GIT_REF=v2026.10.3
+ARG OPENCLAW_GIT_REF=v2026.10.8
 RUN git clone --depth 1 --branch "${OPENCLAW_GIT_REF}" https://github.com/openclaw/openclaw.git .
 
 # NOTE: the old 'relax workspace:* to *' patch was removed: on OpenClaw >= 2026.10 it made pnpm
